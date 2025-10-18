@@ -143,7 +143,7 @@ NOTE:
 
 ## ⚙️ SQL Operations
 
-**1. Update Command**
+**Update Command**
 
 Updates the country name from 'USA' to 'United States' to ensure data consistency. Use SELECT to view if the UPDATE was successful.
 
@@ -157,9 +157,9 @@ FROM institutions
 WHERE country = 'United States';
 ```
 
-Q. Which are the top 5 highest-rated papers? 
+### Q. Which are the top 5 highest-rated papers? 
 
-**2. LIMIT Command**
+**LIMIT Command**
 
 ```sql
 SELECT p.title, AVG(r.score) AS avg_score
@@ -170,9 +170,9 @@ ORDER BY avg_score DESC
 LIMIT 5;
 ```
 
-Q. How to combine Accepted and Rejected papers into a single list? 
+### Q. How to combine Accepted and Rejected papers into a single list? 
 
-**3. UNION Command**
+**UNION Command**
 
 ```sql
 SELECT title, paper_status FROM papers WHERE paper_status = 'Accepted'
@@ -180,9 +180,9 @@ UNION
 SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 ```
 
-Q. Which authors are affiliated with which institutions? 
+### Q. Which authors are affiliated with which institutions? 
 
-**4. JOIN and ORDER BY Command**
+**JOIN and ORDER BY Command**
 
 ```sql
 SELECT a.author_id, a.full_name, a.field_of_research, i.name AS institution
@@ -191,9 +191,9 @@ JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY a.full_name;
 ```
 
-Q. What are the details of each paper along with its author and institution? 
+### Q. What are the details of each paper along with its author and institution? 
 
-**5. Multi-table JOIN Command**
+**Multi-table JOIN Command**
 
 ```sql 
 SELECT p.paper_id, p.title, p.paper_status, p.submission_date,
@@ -204,9 +204,9 @@ JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY p.submission_date;
 ```
 
-Q. How many papers has each institution published? 
+### Q. How many papers has each institution published? 
 
-**6. LEFT JOIN, COUNT, GROUP BY Command**
+**LEFT JOIN, COUNT, GROUP BY Command**
 
 ```sql
 SELECT i.name AS institution,
@@ -218,9 +218,9 @@ GROUP BY i.inst_id
 ORDER BY total_papers DESC;
 ```
 
-Q. How many papers has each author written?  
+### Q. How many papers has each author written?  
 
-**7. HAVING, GROUP BY Command**
+**HAVING, GROUP BY Command**
 
 ```sql
 SELECT a.full_name AS author,
@@ -232,9 +232,9 @@ HAVING COUNT(p.paper_id) > 0
 ORDER BY num_papers DESC;
 ```
 
-Q. What are the average review scores for each paper?  
+### Q. What are the average review scores for each paper?  
 
-**8. AVG, COUNT, GROUP BY Command**
+**AVG, COUNT, GROUP BY Command**
 
 ```sql
 SELECT p.title, AVG(r.score) AS avg_score, COUNT(r.review_id) AS num_reviews
@@ -244,9 +244,9 @@ GROUP BY p.paper_id
 ORDER BY avg_score DESC;
 ```
 
-Q. Which papers are currently under review?  
+### Q. Which papers are currently under review?  
 
-**9. WHERE, ORDER BY Command**
+**WHERE, ORDER BY Command**
 
 ```sql
 SELECT p.title, a.full_name AS author,p.paper_status, i.name AS institution
@@ -257,9 +257,9 @@ WHERE p.paper_status = 'Under Review'
 ORDER BY p.submission_date;
 ```
 
-Q. How can papers be categorized by their average score? 
+### Q. How can papers be categorized by their average score? 
 
-**10. CASE WHEN, GROUP BY Command**
+**CASE WHEN, GROUP BY Command**
 
 ```sql
 SELECT 
@@ -277,9 +277,9 @@ GROUP BY p.paper_id
 ORDER BY avg_score DESC;
 ```
 
-What is the ranking of papers based on review scores? 
+### Q. What is the ranking of papers based on review scores? 
 
-**11. RANK() OVER, Window Functions**
+**RANK() OVER, Window Functions**
  
 ```sql
 SELECT 
@@ -291,9 +291,9 @@ LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 ```
 
-Q. How can authors be sequentially ordered? 
+### Q. How can authors be sequentially ordered? 
 
-**12. ROW_NUMBER(), Window Functions**
+**ROW_NUMBER(), Window Functions**
 
 ```sql
 SELECT 
@@ -304,9 +304,9 @@ SELECT
 FROM authors;
 ```
 
-Q. Which institutions have the highest average paper ratings?  
+### Q. Which institutions have the highest average paper ratings?  
 
-**13. CTE (WITH), Aggregates, HAVING**
+**CTE (WITH), Aggregates, HAVING**
 
 ```sql
 WITH paper_scores AS (
@@ -329,9 +329,9 @@ HAVING institution_avg_score > 8
 ORDER BY institution_avg_score DESC;
 ```
 
-Q. How to handle missing review data gracefully? 
+### Q. How to handle missing review data gracefully? 
 
-**14. COALESCE Command**
+**COALESCE Command**
 
 ```sql
 SELECT 
@@ -342,7 +342,7 @@ LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 ```
 
-#### Q. How to extract month and year from paper submission dates?  
+### Q. How to extract month and year from paper submission dates?  
 
 **Date functions (`strftime`)**
 
