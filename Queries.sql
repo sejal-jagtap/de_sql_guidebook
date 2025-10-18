@@ -7,6 +7,20 @@ Select *
 from institutions
 where country = 'United States';
 
+
+-- Add LIMIT example (top 5 papers by average score)
+SELECT p.title, AVG(r.score) AS avg_score
+FROM papers p
+LEFT JOIN reviews r ON p.paper_id = r.paper_id
+GROUP BY p.paper_id
+ORDER BY avg_score DESC
+LIMIT 5;
+
+-- Add UNION example (papers that are Accepted or Rejected)
+SELECT title, paper_status FROM papers WHERE paper_status = 'Accepted'
+UNION
+SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
+
 /*
  * List all authors with their institution
  */
@@ -160,18 +174,6 @@ SELECT
 FROM papers
 ORDER BY submission_date;
 
--- Add LIMIT example (top 5 papers by average score)
-SELECT p.title, AVG(r.score) AS avg_score
-FROM papers p
-LEFT JOIN reviews r ON p.paper_id = r.paper_id
-GROUP BY p.paper_id
-ORDER BY avg_score DESC
-LIMIT 5;
-
--- Add UNION example (papers that are Accepted or Rejected)
-SELECT title, paper_status FROM papers WHERE paper_status = 'Accepted'
-UNION
-SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 
 
 

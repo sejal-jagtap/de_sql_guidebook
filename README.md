@@ -157,3 +157,201 @@ FROM institutions
 WHERE country = 'United States';
 ```
 
+Q. Which are the top 5 highest-rated papers? 
+
+**2. LIMIT Command**
+
+```sql
+SELECT p.title, AVG(r.score) AS avg_score
+FROM papers p
+LEFT JOIN reviews r ON p.paper_id = r.paper_id
+GROUP BY p.paper_id
+ORDER BY avg_score DESC
+LIMIT 5;
+```
+
+Q. How to combine Accepted and Rejected papers into a single list? 
+
+**3. UNION Command**
+
+```sql
+SELECT title, paper_status FROM papers WHERE paper_status = 'Accepted'
+UNION
+SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
+```
+
+Q. Which authors are affiliated with which institutions? 
+
+**4. JOIN and ORDER BY Command**
+
+```sql
+SELECT a.author_id, a.full_name, a.field_of_research, i.name AS institution
+FROM authors a
+JOIN institutions i ON a.inst_id = i.inst_id
+ORDER BY a.full_name;
+```
+
+Q. What are the details of each paper along with its author and institution? 
+
+**5. Multi-table JOIN Command**
+
+```sql 
+SELECT p.paper_id, p.title, p.paper_status, p.submission_date,
+       a.full_name AS author, i.name AS institution
+FROM papers p
+JOIN authors a ON p.author_id = a.author_id
+JOIN institutions i ON a.inst_id = i.inst_id
+ORDER BY p.submission_date;
+```
+
+Q. How many papers has each institution published? 
+
+**6. LEFT JOIN, COUNT, GROUP BY Command**
+
+```sql
+SELECT i.name AS institution,
+       COUNT(p.paper_id) AS total_papers
+FROM institutions i
+LEFT JOIN authors a ON i.inst_id = a.inst_id
+LEFT JOIN papers p ON a.author_id = p.author_id
+GROUP BY i.inst_id
+ORDER BY total_papers DESC;
+```
+
+Q. How many papers has each author written?  
+
+**7. HAVING, GROUP BY Command**
+
+```sql
+SELECT a.full_name AS author,
+       COUNT(p.paper_id) AS num_papers
+FROM authors a
+LEFT JOIN papers p ON a.author_id = p.author_id
+GROUP BY a.author_id
+HAVING COUNT(p.paper_id) > 0
+ORDER BY num_papers DESC;
+```
+
+Q. What are the average review scores for each paper?  
+
+**8. AVG, COUNT, GROUP BY Command**
+
+```sql
+SELECT p.title, AVG(r.score) AS avg_score, COUNT(r.review_id) AS num_reviews
+FROM papers p
+LEFT JOIN reviews r ON p.paper_id = r.paper_id
+GROUP BY p.paper_id
+ORDER BY avg_score DESC;
+```
+
+Q. Which papers are currently under review?  
+
+**9. WHERE, ORDER BY Command**
+
+```sql
+SELECT p.title, a.full_name AS author,p.paper_status, i.name AS institution
+FROM papers p
+JOIN authors a ON p.author_id = a.author_id
+JOIN institutions i ON a.inst_id = i.inst_id
+WHERE p.paper_status = 'Under Review'
+ORDER BY p.submission_date;
+```
+
+Q. How can papers be categorized by their average score? 
+
+**10. CASE WHEN, GROUP BY Command**
+
+```sql
+SELECT 
+    p.title,
+    AVG(r.score) AS avg_score,
+    CASE 
+        WHEN AVG(r.score) >= 9 THEN 'Outstanding'
+        WHEN AVG(r.score) BETWEEN 7 AND 8.99 THEN 'Strong'
+        WHEN AVG(r.score) BETWEEN 5 AND 6.99 THEN 'Moderate'
+        ELSE 'Needs Improvement'
+    END AS review_category
+FROM papers p
+LEFT JOIN reviews r ON p.paper_id = r.paper_id
+GROUP BY p.paper_id
+ORDER BY avg_score DESC;
+```
+
+What is the ranking of papers based on review scores? 
+
+**11. RANK() OVER, Window Functions**
+ 
+```sql
+SELECT 
+    p.title,
+    AVG(r.score) AS avg_score,
+    RANK() OVER (ORDER BY AVG(r.score) DESC) AS ranking
+FROM papers p
+LEFT JOIN reviews r ON p.paper_id = r.paper_id
+GROUP BY p.paper_id;
+```
+
+Q. How can authors be sequentially ordered? 
+
+**12. ROW_NUMBER(), Window Functions**
+
+```sql
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY full_name) AS row_num,
+    full_name,
+    field_of_research,
+    inst_id
+FROM authors;
+```
+
+Q. Which institutions have the highest average paper ratings?  
+
+**13. CTE (WITH), Aggregates, HAVING**
+
+```sql
+WITH paper_scores AS (
+    SELECT 
+        p.paper_id,
+        a.inst_id,
+        AVG(r.score) AS avg_score
+    FROM papers p
+    JOIN authors a ON p.author_id = a.author_id
+    LEFT JOIN reviews r ON p.paper_id = r.paper_id
+    GROUP BY p.paper_id
+)
+SELECT 
+    i.name AS institution,
+    ROUND(AVG(ps.avg_score), 2) AS institution_avg_score
+FROM paper_scores ps
+JOIN institutions i ON ps.inst_id = i.inst_id
+GROUP BY i.inst_id
+HAVING institution_avg_score > 8
+ORDER BY institution_avg_score DESC;
+```
+
+Q. How to handle missing review data gracefully? 
+
+**14. COALESCE Command**
+
+```sql
+SELECT 
+    p.title,
+    COALESCE(AVG(r.score), 0) AS avg_score
+FROM papers p
+LEFT JOIN reviews r ON p.paper_id = r.paper_id
+GROUP BY p.paper_id;
+```
+
+Q. How to extract month and year from paper submission dates?  
+
+**15. Date functions (`strftime`)**
+
+```sql
+SELECT 
+    title,
+    submission_date,
+    strftime('%m', submission_date) AS submission_month,
+    strftime('%Y', submission_date) AS submission_year
+FROM papers
+ORDER BY submission_date;
+```
