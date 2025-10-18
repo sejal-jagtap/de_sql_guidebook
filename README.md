@@ -131,7 +131,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
 
 <img width="560" height="133" alt="create_papers" src="https://github.com/user-attachments/assets/32b72c69-d14f-458a-a104-e4347eb3f52f" />
 
-
+NOTE:
 **Why use primary and foreign keys?**
 - Primary and foreign key constraints ensure **referential integrity**.
 
@@ -148,4 +148,4 @@ For this project, a **sample dataset** was manually created to simulate a resear
 UPDATE institutions
 SET country = 'United States'
 WHERE country = 'USA';
-
+```
