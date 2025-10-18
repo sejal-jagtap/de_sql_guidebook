@@ -35,3 +35,14 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Reviews are linked to papers via `paper_id`.  
    - Each review contains a reviewer name, a score (1–10), and optional comments.  
    - Multiple reviews per paper were included to support aggregation and ranking queries.
+
+Why use primary and foreign keys?
+- Primary and foreign key constraints ensure **referential integrity**.
+
+Why use NOT NULL?
+- `NOT NULL` constraints prevent missing critical information.
+
+Why use CHECK?
+- CHECK constraints enforce valid values for paper status and review scores.
+
+
