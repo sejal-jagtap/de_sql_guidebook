@@ -17,7 +17,8 @@ The SQL work explores:
 
 For this project, a **sample dataset** was manually created to simulate a research publication environment. Four related tables were designed following **database design best practices**:
 
-1. **Institutions**  
+1. **Institutions**
+   
    - Each institution has a unique `inst_id` (auto-incremented primary key), a name, and a country.  
    - Explicit `inst_id` values were inserted to ensure that foreign key references from authors are never NULL.
   
@@ -44,7 +45,8 @@ For this project, a **sample dataset** was manually created to simulate a resear
 <img width="330" height="182" alt="create_institutions" src="https://github.com/user-attachments/assets/0ac59b06-a33d-4f15-9c7e-aa30731c9dbe" />
 
 
-2. **Authors**  
+2. **Authors**
+   
    - Authors are linked to institutions via `inst_id` (foreign key).  
    - Each author has a unique `author_id`, full name, and field of research.  
    - Sample authors cover various research domains such as Machine Learning, Computer Vision, NLP, Robotics, and AI Ethics.
@@ -71,7 +73,8 @@ For this project, a **sample dataset** was manually created to simulate a resear
 <img width="392" height="116" alt="create_authors" src="https://github.com/user-attachments/assets/79f0f838-6ee2-4aea-aa30-e9d6669b27b3" />
 
 
-3. **Papers**  
+3. **Papers**
+   
    - Papers are associated with authors using `author_id` as a foreign key.  
    - Each paper has a unique `paper_id`, title, submission date, and status (`Under Review`, `Accepted`, or `Rejected`).  
    - This table models research output for each author.
@@ -98,7 +101,8 @@ For this project, a **sample dataset** was manually created to simulate a resear
 
 <img width="560" height="133" alt="create_papers" src="https://github.com/user-attachments/assets/7872c89f-feb7-46f2-9b4e-19eb4de007a7" />
 
-4. **Reviews**  
+4. **Reviews**
+   
    - Reviews are linked to papers via `paper_id`.  
    - Each review contains a reviewer's name, a score (1–10), and optional comments.  
    - Multiple reviews per paper were included to support aggregation and ranking queries.
