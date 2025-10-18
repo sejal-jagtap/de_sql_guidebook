@@ -144,8 +144,16 @@ NOTE:
 ## ⚙️ SQL Operations
 
 **1. Update Command**
+
+Updates the country name from 'USA' to 'United States' to ensure data consistency. Use SELECT to view if the UPDATE was successful.
+
 ```sql
 UPDATE institutions
 SET country = 'United States'
 WHERE country = 'USA';
+
+SELECT * 
+FROM institutions
+WHERE country = 'United States';
 ```
+
