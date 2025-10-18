@@ -130,4 +130,11 @@ For this project, a **sample dataset** was manually created to simulate a resear
 **Why use 'CHECK'?**
 - CHECK constraints enforce valid values for paper status and review scores.
 
+## ⚙️ SQL Operations
+
+**1. Update Command**
+```sql
+UPDATE institutions
+SET country = 'United States'
+WHERE country = 'USA';
 
