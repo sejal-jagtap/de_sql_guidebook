@@ -47,6 +47,24 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Each author has a unique `author_id`, full name, and field of research.  
    - Sample authors cover various research domains such as Machine Learning, Computer Vision, NLP, Robotics, and AI Ethics.
 
+         CREATE TABLE IF NOT EXISTS authors (
+          author_id         INTEGER PRIMARY KEY AUTOINCREMENT,
+          full_name         VARCHAR(100) NOT NULL,
+          field_of_research VARCHAR(100) NOT NULL,
+          inst_id           INTEGER NOT NULL,
+          FOREIGN KEY (inst_id) REFERENCES institutions(inst_id)
+         );
+         
+         -- inserts referencing explicit inst_id
+         INSERT INTO authors (full_name, field_of_research, inst_id) VALUES
+         ('Alice Kim', 'Machine Learning', 1),
+         ('Rohan Mehta', 'Computer Vision', 4),
+         ('Lina Zhao', 'Natural Language Processing', 6),
+         ('Ethan Ross', 'Robotics', 2),
+         ('Sofia Martinez', 'AI Ethics', 3),
+         ('Chen Wei', 'Computer Vision', 10);
+
+     <img width="392" height="116" alt="create_authors" src="https://github.com/user-attachments/assets/79f0f838-6ee2-4aea-aa30-e9d6669b27b3" />
 
 
 3. **Papers**  
