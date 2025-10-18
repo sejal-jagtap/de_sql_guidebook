@@ -342,9 +342,9 @@ LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 ```
 
-Q. How to extract month and year from paper submission dates?  
+#### Q. How to extract month and year from paper submission dates?  
 
-**15. Date functions (`strftime`)**
+**Date functions (`strftime`)**
 
 ```sql
 SELECT 
