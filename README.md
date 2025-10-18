@@ -27,6 +27,18 @@ For this project, a **sample dataset** was manually created to simulate a resear
              country   VARCHAR(100) NOT NULL
          );
 
+            INSERT INTO institutions (inst_id, name, country) VALUES
+            (1, 'Massachusetts Institute of Technology', 'USA'),
+            (2, 'Stanford University', 'USA'),
+            (3, 'Harvard University', 'USA'),
+            (4, 'Indian Institute of Technology Bombay', 'India'),
+            (5, 'Indian Institute of Science', 'India'),
+            (6, 'University of Oxford', 'United Kingdom'),
+            (7, 'University of Cambridge', 'United Kingdom'),
+            (8, 'ETH Zurich', 'Switzerland'),
+            (9, 'National University of Singapore', 'Singapore'),
+            (10, 'Tsinghua University', 'China');
+
      <img width="330" height="182" alt="create_institutions" src="https://github.com/user-attachments/assets/0ac59b06-a33d-4f15-9c7e-aa30731c9dbe" />
 
 
@@ -34,6 +46,8 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Authors are linked to institutions via `inst_id` (foreign key).  
    - Each author has a unique `author_id`, full name, and field of research.  
    - Sample authors cover various research domains such as Machine Learning, Computer Vision, NLP, Robotics, and AI Ethics.
+
+
 
 3. **Papers**  
    - Papers are associated with authors using `author_id` as a foreign key.  
