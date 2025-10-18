@@ -27,7 +27,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
              country   VARCHAR(100) NOT NULL
          );
 
-           <img width="330" height="182" alt="create_institutions" src="https://github.com/user-attachments/assets/0ac59b06-a33d-4f15-9c7e-aa30731c9dbe" />
+     <img width="330" height="182" alt="create_institutions" src="https://github.com/user-attachments/assets/0ac59b06-a33d-4f15-9c7e-aa30731c9dbe" />
 
 
 2. **Authors**  
