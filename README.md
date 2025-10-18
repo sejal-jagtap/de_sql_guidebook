@@ -72,6 +72,27 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Each paper has a unique `paper_id`, title, submission date, and status (`Under Review`, `Accepted`, or `Rejected`).  
    - This table models research output for each author.
 
+
+         CREATE TABLE IF NOT EXISTS papers (
+             paper_id        INTEGER PRIMARY KEY AUTOINCREMENT,
+             title           VARCHAR(200) NOT NULL,
+             submission_date DATE NOT NULL,
+             paper_status    VARCHAR(50) NOT NULL CHECK (paper_status IN ('Under Review','Accepted','Rejected')),
+             author_id       INTEGER NOT NULL,
+             FOREIGN KEY (author_id) REFERENCES authors(author_id)
+         );
+         
+         INSERT INTO papers (title, submission_date, paper_status, author_id) VALUES
+         ('Quantum-Inspired Neural Networks', '2024-01-15', 'Accepted', 1),
+         ('Self-Supervised Learning for Images', '2024-02-01', 'Under Review', 2),
+         ('AI Ethics in Language Models', '2024-02-10', 'Rejected', 3),
+         ('Autonomous Drone Navigation', '2024-03-01', 'Accepted', 4),
+         ('Prompt Engineering for LLMs', '2024-03-12', 'Under Review', 3),
+         ('Ethical AI for Social Media', '2024-03-20', 'Under Review', 5),
+         ('Vision Transformers in Action', '2024-03-25', 'Accepted', 6);
+
+     <img width="560" height="133" alt="create_papers" src="https://github.com/user-attachments/assets/7872c89f-feb7-46f2-9b4e-19eb4de007a7" />
+
 4. **Reviews**  
    - Reviews are linked to papers via `paper_id`.  
    - Each review contains a reviewer's name, a score (1–10), and optional comments.  
