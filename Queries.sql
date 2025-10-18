@@ -9,9 +9,8 @@ where country = 'United States';
 
 /*
  * List all authors with their institution
- * JOIN: connects authors to institutions
-   ORDER BY: sorts authors alphabetically
  */
+
 SELECT a.author_id, a.full_name, a.field_of_research, i.name AS institution
 FROM authors a
 JOIN institutions i ON a.inst_id = i.inst_id
