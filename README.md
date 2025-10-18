@@ -21,7 +21,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Each institution has a unique `inst_id` (auto-incremented primary key), a name, and a country.  
    - Explicit `inst_id` values were inserted to ensure that foreign key references from authors are never NULL.
   
-   ```sql
+```sql
            CREATE TABLE IF NOT EXISTS institutions (
              inst_id   INTEGER PRIMARY KEY AUTOINCREMENT, -- cannot be NULL
              name      VARCHAR(150) NOT NULL,
@@ -39,6 +39,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
             (8, 'ETH Zurich', 'Switzerland'),
             (9, 'National University of Singapore', 'Singapore'),
             (10, 'Tsinghua University', 'China');
+```
 
 <img width="330" height="182" alt="create_institutions" src="https://github.com/user-attachments/assets/0ac59b06-a33d-4f15-9c7e-aa30731c9dbe" />
 
@@ -48,7 +49,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Each author has a unique `author_id`, full name, and field of research.  
    - Sample authors cover various research domains such as Machine Learning, Computer Vision, NLP, Robotics, and AI Ethics.
   
-   ```sql
+```sql
          CREATE TABLE IF NOT EXISTS authors (
           author_id         INTEGER PRIMARY KEY AUTOINCREMENT,
           full_name         VARCHAR(100) NOT NULL,
@@ -65,6 +66,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
          ('Ethan Ross', 'Robotics', 2),
          ('Sofia Martinez', 'AI Ethics', 3),
          ('Chen Wei', 'Computer Vision', 10);
+```
 
 <img width="392" height="116" alt="create_authors" src="https://github.com/user-attachments/assets/79f0f838-6ee2-4aea-aa30-e9d6669b27b3" />
 
@@ -74,7 +76,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Each paper has a unique `paper_id`, title, submission date, and status (`Under Review`, `Accepted`, or `Rejected`).  
    - This table models research output for each author.
 
-   ```sql
+```sql
          CREATE TABLE IF NOT EXISTS papers (
              paper_id        INTEGER PRIMARY KEY AUTOINCREMENT,
              title           VARCHAR(200) NOT NULL,
@@ -92,6 +94,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
          ('Prompt Engineering for LLMs', '2024-03-12', 'Under Review', 3),
          ('Ethical AI for Social Media', '2024-03-20', 'Under Review', 5),
          ('Vision Transformers in Action', '2024-03-25', 'Accepted', 6);
+```
 
 <img width="560" height="133" alt="create_papers" src="https://github.com/user-attachments/assets/7872c89f-feb7-46f2-9b4e-19eb4de007a7" />
 
@@ -100,7 +103,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Each review contains a reviewer's name, a score (1–10), and optional comments.  
    - Multiple reviews per paper were included to support aggregation and ranking queries.
 
-   ```sql
+```sql
          CREATE TABLE IF NOT EXISTS reviews (
              review_id     INTEGER PRIMARY KEY AUTOINCREMENT,
              paper_id      INTEGER NOT NULL,
@@ -120,6 +123,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
          (5, 'Dr. White', 8, 'Promising idea, worth exploring further.'),
          (6, 'Dr. Johnson', 7, 'Important societal angle, minor revisions needed.'),
          (7, 'Dr. Green', 9, 'Excellent experimental setup, clear results.');
+```
 
 <img width="560" height="133" alt="create_papers" src="https://github.com/user-attachments/assets/32b72c69-d14f-458a-a104-e4347eb3f52f" />
 
