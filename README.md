@@ -98,6 +98,29 @@ For this project, a **sample dataset** was manually created to simulate a resear
    - Each review contains a reviewer's name, a score (1–10), and optional comments.  
    - Multiple reviews per paper were included to support aggregation and ranking queries.
 
+         CREATE TABLE IF NOT EXISTS reviews (
+             review_id     INTEGER PRIMARY KEY AUTOINCREMENT,
+             paper_id      INTEGER NOT NULL,
+             reviewer_name VARCHAR(100) NOT NULL,
+             score         INTEGER NOT NULL CHECK (score BETWEEN 1 AND 10),
+             comments      TEXT,
+             FOREIGN KEY (paper_id) REFERENCES papers(paper_id)
+         );
+         
+         INSERT INTO reviews (paper_id, reviewer_name, score, comments) VALUES
+         (1, 'Dr. Smith', 9, 'Innovative work with strong theoretical foundations.'),
+         (1, 'Dr. Brown', 8, 'Solid contribution and clear presentation.'),
+         (2, 'Dr. Clark', 7, 'Interesting results, needs more ablation studies.'),
+         (3, 'Dr. Kim', 5, 'Important ethical perspective, but lacks depth.'),
+         (4, 'Dr. Lee', 10, 'Outstanding work, highly recommended for acceptance.'),
+         (4, 'Dr. Adams', 9, 'Strong experimental design and clarity.'),
+         (5, 'Dr. White', 8, 'Promising idea, worth exploring further.'),
+         (6, 'Dr. Johnson', 7, 'Important societal angle, minor revisions needed.'),
+         (7, 'Dr. Green', 9, 'Excellent experimental setup, clear results.');
+
+     <img width="560" height="133" alt="create_papers" src="https://github.com/user-attachments/assets/32b72c69-d14f-458a-a104-e4347eb3f52f" />
+
+
 **Why use primary and foreign keys?**
 - Primary and foreign key constraints ensure **referential integrity**.
 
