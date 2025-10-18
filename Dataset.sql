@@ -67,7 +67,7 @@ INSERT INTO papers (title, submission_date, paper_status, author_id) VALUES
 ('Ethical AI for Social Media', '2024-03-20', 'Under Review', 5),
 ('Vision Transformers in Action', '2024-03-25', 'Accepted', 6);
 
-status VARCHAR(50) NOT NULL CHECK (status IN ('Under Review',' Accepted',' Rejected'))
+
 
 
 -- 4.Reviews Table
