@@ -12,12 +12,16 @@ The SQL work explores:
 - Analytical SQL using window functions and CTEs. 
 - Independently explored features (Date functions, Window LAG/LEAD, LIMIT, UNION).
 
+---
+
 ## 📁 Project Structure
 
     de_sql_guidebook/
          |-- Dataset.sql
          |-- Queries.sql
          `-- README.md
+
+---
 
 ## 🗂 Dataset Creation
 
@@ -147,6 +151,8 @@ For this project, a **sample dataset** was manually created to simulate a resear
 
 **Why use 'CHECK'?**
 - CHECK constraints enforce valid values for paper status and review scores.
+
+---
 
 ## ⚙️ SQL Operations
 
