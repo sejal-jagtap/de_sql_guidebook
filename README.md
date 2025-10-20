@@ -12,6 +12,13 @@ The SQL work explores:
 - Analytical SQL using window functions and CTEs. 
 - Independently explored features (Date functions, Window LAG/LEAD, LIMIT, UNION).
 
+## 📁 Project Structure
+
+    de_sql_guidebook/
+         |-- Dataset.sql
+         |-- Queries.sql
+         `-- README.md
+
 ## 🗂 Dataset Creation
 
 For this project, a **sample dataset** was manually created to simulate a research publication environment. Four related tables were designed following **database design best practices**:
