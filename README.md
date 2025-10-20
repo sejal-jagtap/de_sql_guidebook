@@ -161,7 +161,9 @@ For this project, a **sample dataset** was manually created to simulate a resear
 **Update Command**
 
 Explanation:
-We used the UPDATE command to modify existing data — in this case, renaming all countries labeled “USA” to “United States.” After the update, we verify the change with a SELECT query.
+The UPDATE statement is used to modify existing records in a table. In this case, we correct the country names labeled “USA” to “United States.” The WHERE clause ensures only rows meeting this condition are affected (avoid running updates without WHERE, or all rows will change). After updating, use a SELECT query to verify that the changes were applied correctly.
+
+✅ Note: Always back up data or test updates using SELECT first to confirm the filter is accurate.
 
 ```sql
 UPDATE institutions
@@ -180,7 +182,9 @@ WHERE country = 'United States';
 **LIMIT Command**
 
 Explanation:
-We join the papers and reviews tables, calculate each paper’s average score using AVG(), and sort results in descending order. The LIMIT 5 ensures only the top 5 are shown.
+We calculate the average review score for each paper by joining the papers and reviews tables on their paper_id. The AVG() function computes the mean score, while ORDER BY DESC sorts the results from highest to lowest. The LIMIT 5 ensures only the top 5 papers appear.
+
+✅ Note: Use LEFT JOIN so papers with missing reviews don’t get excluded.
 
 ```sql
 SELECT p.title, AVG(r.score) AS avg_score
@@ -199,7 +203,9 @@ LIMIT 5;
 **UNION Command**
 
 Explanation:
-The UNION operator merges the results of two queries while removing duplicates. This helps view all papers that are either Accepted or Rejected.
+UNION merges results from multiple queries and automatically removes duplicates. Here, it combines “Accepted” and “Rejected” papers into one unified list.
+
+✅ Note: If you want to include duplicates, use UNION ALL.
 
 ```sql
 SELECT title, paper_status FROM papers WHERE paper_status = 'Accepted'
@@ -214,7 +220,9 @@ SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 **JOIN and ORDER BY Command**
 
 Explanation:
-Using an INNER JOIN, we link authors with institutions via inst_id to show full author profiles alongside their institutions.
+The INNER JOIN connects authors with their respective institutions via inst_id. It displays each author’s name, field of research, and affiliated institution, sorted alphabetically by author.
+
+✅ Note: INNER JOIN excludes authors with no institution; use LEFT JOIN if you want to include them.
 
 ```sql
 SELECT a.author_id, a.full_name, a.field_of_research, i.name AS institution
@@ -230,7 +238,9 @@ ORDER BY a.full_name;
 **Multi-table JOIN Command**
 
 Explanation:
-We join three tables — papers, authors, and institutions — to display complete details for each paper, including author and institution information.
+By joining papers, authors, and institutions, this query builds a complete paper record with author and institution details. Sorting by submission_date helps track chronological order.
+
+✅ Note: Ensure that the join keys (author_id, inst_id) have matching data types.
 
 ```sql 
 SELECT p.paper_id, p.title, p.paper_status, p.submission_date,
@@ -248,7 +258,9 @@ ORDER BY p.submission_date;
 **LEFT JOIN, COUNT, GROUP BY Command**
 
 Explanation:
-We use LEFT JOIN to include institutions even if they have no papers, and count paper IDs grouped by each institution.
+This query counts papers per institution, even if some institutions have zero papers. The double LEFT JOIN ensures all institutions are listed.
+
+✅ Note: COUNT(column) ignores NULLs; use COUNT(*) if you want to count all rows.
 
 ```sql
 SELECT i.name AS institution,
@@ -267,7 +279,9 @@ ORDER BY total_papers DESC;
 **HAVING, GROUP BY Command**
 
 Explanation:
-This query groups papers by authors and counts their contributions. The HAVING clause filters out authors with zero papers.
+Grouping by each author, we count how many papers they’ve written. The HAVING clause filters out authors with zero papers.
+
+✅ Note: HAVING is used for conditions on aggregated data (unlike WHERE).
 
 ```sql
 SELECT a.full_name AS author,
@@ -286,7 +300,9 @@ ORDER BY num_papers DESC;
 **AVG, COUNT, GROUP BY Command**
 
 Explanation:
-Using the AVG() aggregate function and grouping by paper, we can find each paper’s mean score and total review count.
+This computes the mean score and total number of reviews per paper. LEFT JOIN keeps papers that may not yet have reviews.
+
+✅ Note: To handle missing reviews, wrap AVG(r.score) in COALESCE() to replace NULLs.
 
 ```sql
 SELECT p.title, AVG(r.score) AS avg_score, COUNT(r.review_id) AS num_reviews
@@ -303,7 +319,9 @@ ORDER BY avg_score DESC;
 **WHERE, ORDER BY Command**
 
 Explanation:
-This query filters the papers table for those marked “Under Review” and joins with author and institution details.
+Filters papers with a status of “Under Review,” while joining author and institution data for complete context.
+
+✅ Note: Ensure consistent casing (e.g., ‘Under Review’ vs ‘under review’) since SQL is case-sensitive in some databases.
 
 ```sql
 SELECT p.title, a.full_name AS author,p.paper_status, i.name AS institution
@@ -321,7 +339,9 @@ ORDER BY p.submission_date;
 **CASE WHEN, GROUP BY Command**
 
 Explanation:
-Using CASE WHEN, we classify papers into performance categories based on their average review scores.
+The CASE WHEN expression creates dynamic labels based on score ranges. It groups each paper into performance categories like Outstanding or Needs Improvement.
+
+✅ Note: CASE logic executes top-down — the first true condition is applied.
 
 ```sql
 SELECT 
@@ -346,7 +366,9 @@ ORDER BY avg_score DESC;
 **RANK() OVER, Window Functions**
 
 Explanation:
-Window functions like RANK() let us assign ranks dynamically based on average review scores.
+RANK() assigns a rank to each paper based on the average score. Papers with identical scores receive the same rank, and the next rank is skipped accordingly.
+
+✅ Note: Use DENSE_RANK() if you don’t want rank gaps after ties.
  
 ```sql
 SELECT 
@@ -365,7 +387,9 @@ GROUP BY p.paper_id;
 **ROW_NUMBER(), Window Functions**
 
 Explanation:
-The ROW_NUMBER() function is used to generate a sequential number for each row ordered by author name.
+ROW_NUMBER() generates a unique sequential number for each row based on a specified order — useful for pagination or indexing.
+
+✅ Note: Unlike RANK(), ROW_NUMBER() doesn’t handle ties — every row gets a unique number.
 
 ```sql
 SELECT 
@@ -383,7 +407,9 @@ FROM authors;
 **CTE (WITH), Aggregates, HAVING**
 
 Explanation:
-We use a CTE (WITH) to calculate each paper’s average score first, then aggregate those averages per institution.
+A Common Table Expression (CTE) helps break complex queries into logical steps. First, calculate each paper’s average score inside the CTE. Then, average those scores per institution, showing only those with institutional averages above 8.
+
+✅ Note: Use ROUND() to format decimals neatly and HAVING to filter aggregated results.
 
 ```sql
 WITH paper_scores AS (
@@ -413,7 +439,9 @@ ORDER BY institution_avg_score DESC;
 **COALESCE Command**
 
 Explanation:
-COALESCE() replaces NULL values with a default value (0 here), ensuring no missing data in average calculations.
+COALESCE() returns the first non-NULL value in its arguments. Replacing NULL scores with 0 avoids issues in calculations and ensures complete reporting.
+
+✅ Note: Use COALESCE() instead of IFNULL() for better portability across databases.
 
 ```sql
 SELECT 
@@ -431,7 +459,9 @@ GROUP BY p.paper_id;
 **Date functions (`strftime`)**
 
 Explanation:
-SQLite’s strftime() function allows date formatting — here used to extract submission month and year from date fields.
+SQLite’s strftime() formats dates — here, it extracts submission month (%m) and year (%Y) from the submission_date. This helps group or analyze submissions by time periods.
+
+✅ Note: In other SQL engines, use equivalents like EXTRACT(MONTH FROM date_column) or TO_CHAR() in PostgreSQL.
 
 ```sql
 SELECT 
