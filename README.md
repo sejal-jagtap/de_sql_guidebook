@@ -144,7 +144,7 @@ NOTE:
 
 ### Q1. How to update institution names and confirm changes?
 
-**1. Update Command**
+**Update Command**
 
 Explanation:
 We used the UPDATE command to modify existing data — in this case, renaming all countries labeled “USA” to “United States.” After the update, we verify the change with a SELECT query.
@@ -161,9 +161,9 @@ WHERE country = 'United States';
 
 <img width="329" height="71" alt="update_1" src="https://github.com/user-attachments/assets/09b7352b-80b6-4b48-b88f-0371c8c6b620" />
 
-### Q. Which are the top 5 highest-rated papers? 
+### Q2. Which are the top 5 highest-rated papers? 
 
-**2. LIMIT Command**
+**LIMIT Command**
 
 Explanation:
 We join the papers and reviews tables, calculate each paper’s average score using AVG(), and sort results in descending order. The LIMIT 5 ensures only the top 5 are shown.
@@ -180,9 +180,9 @@ LIMIT 5;
 <img width="247" height="104" alt="top 5 papers based on avg score" src="https://github.com/user-attachments/assets/bad60de6-12da-43fc-ab08-d3947d9e2369" />
 
 
-### Q. How to combine Accepted and Rejected papers into a single list? 
+### Q3. How to combine Accepted and Rejected papers into a single list? 
 
-**3. UNION Command**
+**UNION Command**
 
 Explanation:
 The UNION operator merges the results of two queries while removing duplicates. This helps view all papers that are either Accepted or Rejected.
@@ -195,9 +195,9 @@ SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 
 <img width="256" height="89" alt="papers accepted and rejected" src="https://github.com/user-attachments/assets/6aaf8ee3-bc3e-4e18-972f-8387142a1040" />
 
-### Q. How to display each author’s institution and research field?
+### Q4. How to display each author’s institution and research field?
 
-**4. JOIN and ORDER BY Command**
+**JOIN and ORDER BY Command**
 
 Explanation:
 Using an INNER JOIN, we link authors with institutions via inst_id to show full author profiles alongside their institutions.
@@ -211,9 +211,9 @@ ORDER BY a.full_name;
 
 <img width="468" height="117" alt="q4" src="https://github.com/user-attachments/assets/f3a4c301-cb52-4b20-97da-5d0938918e11" />
 
-### Q. How to list all papers with author names and their institutions? 
+### Q5. How to list all papers with author names and their institutions? 
 
-**5. Multi-table JOIN Command**
+**Multi-table JOIN Command**
 
 Explanation:
 We join three tables — papers, authors, and institutions — to display complete details for each paper, including author and institution information.
@@ -229,9 +229,9 @@ ORDER BY p.submission_date;
 
 <img width="608" height="135" alt="List all papers with author name and institution" src="https://github.com/user-attachments/assets/db1ed402-e053-4944-b1c3-ce037ca17a16" />
 
-### Q. How to count total papers published per institution?
+### Q6. How to count total papers published per institution?
 
-**6. LEFT JOIN, COUNT, GROUP BY Command**
+**LEFT JOIN, COUNT, GROUP BY Command**
 
 Explanation:
 We use LEFT JOIN to include institutions even if they have no papers, and count paper IDs grouped by each institution.
@@ -248,9 +248,9 @@ ORDER BY total_papers DESC;
 
 <img width="265" height="179" alt="total_papers" src="https://github.com/user-attachments/assets/05409a5e-3086-482f-848a-fc3d2b5df0b0" />
 
-### Q. How to count how many papers each author has written?
+### Q7. How to count how many papers each author has written?
 
-**7. HAVING, GROUP BY Command**
+**HAVING, GROUP BY Command**
 
 Explanation:
 This query groups papers by authors and counts their contributions. The HAVING clause filters out authors with zero papers.
@@ -267,9 +267,9 @@ ORDER BY num_papers DESC;
 
 <img width="182" height="119" alt="papers per author" src="https://github.com/user-attachments/assets/40521583-9985-4dde-a886-bda17f99ddc7" />
 
-### Q. How to calculate average review score per paper? 
+### Q8. How to calculate average review score per paper? 
 
-**8. AVG, COUNT, GROUP BY Command**
+**AVG, COUNT, GROUP BY Command**
 
 Explanation:
 Using the AVG() aggregate function and grouping by paper, we can find each paper’s mean score and total review count.
@@ -284,9 +284,9 @@ ORDER BY avg_score DESC;
 <img width="349" height="136" alt="review score per paper" src="https://github.com/user-attachments/assets/d06946a9-c05f-4631-9ffb-97ea6eb947dc" />
 
 
-### Q. Which papers are currently under review?  
+### Q9. Which papers are currently under review?  
 
-**9. WHERE, ORDER BY Command**
+**WHERE, ORDER BY Command**
 
 Explanation:
 This query filters the papers table for those marked “Under Review” and joins with author and institution details.
@@ -302,9 +302,9 @@ ORDER BY p.submission_date;
 
 <img width="502" height="68" alt="papers under review" src="https://github.com/user-attachments/assets/8dec5650-3ac4-4422-9def-7ea471cdf3a1" />
 
-### Q. How to categorize papers by average score?
+### Q10. How to categorize papers by average score?
 
-**10. CASE WHEN, GROUP BY Command**
+**CASE WHEN, GROUP BY Command**
 
 Explanation:
 Using CASE WHEN, we classify papers into performance categories based on their average review scores.
@@ -327,9 +327,9 @@ ORDER BY avg_score DESC;
 
 <img width="361" height="137" alt="categ paers by average review score" src="https://github.com/user-attachments/assets/7bbdf8f3-c025-48c2-82b6-6e567c86e4ac" />
 
-### Q. How to rank papers by their average scores?
+### Q11. How to rank papers by their average scores?
 
-**11. RANK() OVER, Window Functions**
+**RANK() OVER, Window Functions**
 
 Explanation:
 Window functions like RANK() let us assign ranks dynamically based on average review scores.
@@ -346,9 +346,9 @@ GROUP BY p.paper_id;
 
 <img width="331" height="136" alt="rank papers by avg review score" src="https://github.com/user-attachments/assets/987b72e7-aef9-4b90-8a4a-7642ebb8dc60" />
 
-### Q. How can authors be sequentially ordered? 
+### Q12. How can authors be sequentially ordered? 
 
-**12. ROW_NUMBER(), Window Functions**
+**ROW_NUMBER(), Window Functions**
 
 Explanation:
 The ROW_NUMBER() function is used to generate a sequential number for each row ordered by author name.
@@ -364,9 +364,9 @@ FROM authors;
 
 <img width="392" height="121" alt="assign row numbers to authors" src="https://github.com/user-attachments/assets/261e8946-4b3d-49df-86b2-9420eeac1bb6" />
 
-### Q. Which institutions have the highest average paper ratings?  
+### Q13. Which institutions have the highest average paper ratings?  
 
-**13. CTE (WITH), Aggregates, HAVING**
+**CTE (WITH), Aggregates, HAVING**
 
 Explanation:
 We use a CTE (WITH) to calculate each paper’s average score first, then aggregate those averages per institution.
@@ -394,9 +394,9 @@ ORDER BY institution_avg_score DESC;
 
 <img width="296" height="69" alt="papers with score above 8" src="https://github.com/user-attachments/assets/78dd9b12-2f4a-41cd-aee6-021d134126e1" />
 
-### Q. How to handle missing scores and replace NULL with 0?
+### Q14. How to handle missing scores and replace NULL with 0?
 
-**14. COALESCE Command**
+**COALESCE Command**
 
 Explanation:
 COALESCE() replaces NULL values with a default value (0 here), ensuring no missing data in average calculations.
@@ -412,9 +412,9 @@ GROUP BY p.paper_id;
 
 <img width="245" height="134" alt="image" src="https://github.com/user-attachments/assets/134ac8f4-95c9-49f6-9ae0-838e8d23afb0" />
 
-### Q. How to extract month and year from submission dates?
+### Q15. How to extract month and year from submission dates?
 
-**15. Date functions (`strftime`)**
+**Date functions (`strftime`)**
 
 Explanation:
 SQLite’s strftime() function allows date formatting — here used to extract submission month and year from date fields.
