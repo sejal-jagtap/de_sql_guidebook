@@ -158,7 +158,7 @@ For this project, a **sample dataset** was manually created to simulate a resear
 
 ### Q1. How to update institution names and confirm changes?
 
-**Update Command**
+**Command: UPDATE**
 
 Explanation:
 The UPDATE statement is used to modify existing records in a table. In this case, we correct the country names labeled “USA” to “United States.” The WHERE clause ensures only rows meeting this condition are affected (avoid running updates without WHERE, or all rows will change). After updating, use a SELECT query to verify that the changes were applied correctly.
@@ -179,7 +179,7 @@ WHERE country = 'United States';
 
 ### Q2. Which are the top 5 highest-rated papers? 
 
-**LIMIT Command**
+**Command: LIMIT**
 
 Explanation:
 We calculate the average review score for each paper by joining the papers and reviews tables on their paper_id. The AVG() function computes the mean score, while ORDER BY DESC sorts the results from highest to lowest. The LIMIT 5 ensures only the top 5 papers appear.
@@ -200,7 +200,7 @@ LIMIT 5;
 
 ### Q3. How to combine Accepted and Rejected papers into a single list? 
 
-**UNION Command**
+**Command: UNION**
 
 Explanation:
 UNION merges results from multiple queries and automatically removes duplicates. Here, it combines “Accepted” and “Rejected” papers into one unified list.
@@ -217,7 +217,7 @@ SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 
 ### Q4. How to display each author’s institution and research field?
 
-**JOIN and ORDER BY Command**
+**Command: JOIN and ORDER BY**
 
 Explanation:
 The INNER JOIN connects authors with their respective institutions via inst_id. It displays each author’s name, field of research, and affiliated institution, sorted alphabetically by author.
@@ -235,7 +235,7 @@ ORDER BY a.full_name;
 
 ### Q5. How to list all papers with author names and their institutions? 
 
-**Multi-table JOIN Command**
+**Multi-table JOIN**
 
 Explanation:
 By joining papers, authors, and institutions, this query builds a complete paper record with author and institution details. Sorting by submission_date helps track chronological order.
@@ -255,7 +255,7 @@ ORDER BY p.submission_date;
 
 ### Q6. How to count total papers published per institution?
 
-**LEFT JOIN, COUNT, GROUP BY Command**
+**Command: LEFT JOIN, COUNT, GROUP BY**
 
 Explanation:
 This query counts papers per institution, even if some institutions have zero papers. The double LEFT JOIN ensures all institutions are listed.
@@ -276,7 +276,7 @@ ORDER BY total_papers DESC;
 
 ### Q7. How to count how many papers each author has written?
 
-**HAVING, GROUP BY Command**
+**Command: HAVING, GROUP BY**
 
 Explanation:
 Grouping by each author, we count how many papers they’ve written. The HAVING clause filters out authors with zero papers.
@@ -297,7 +297,7 @@ ORDER BY num_papers DESC;
 
 ### Q8. How to calculate average review score per paper? 
 
-**AVG, COUNT, GROUP BY Command**
+**Command: AVG, COUNT, GROUP BY**
 
 Explanation:
 This computes the mean score and total number of reviews per paper. LEFT JOIN keeps papers that may not yet have reviews.
@@ -316,7 +316,7 @@ ORDER BY avg_score DESC;
 
 ### Q9. Which papers are currently under review?  
 
-**WHERE, ORDER BY Command**
+**Command: WHERE, ORDER BY**
 
 Explanation:
 Filters papers with a status of “Under Review,” while joining author and institution data for complete context.
@@ -336,7 +336,7 @@ ORDER BY p.submission_date;
 
 ### Q10. How to categorize papers by average score?
 
-**CASE WHEN, GROUP BY Command**
+**Command: CASE WHEN, GROUP BY**
 
 Explanation:
 The CASE WHEN expression creates dynamic labels based on score ranges. It groups each paper into performance categories like Outstanding or Needs Improvement.
@@ -363,7 +363,7 @@ ORDER BY avg_score DESC;
 
 ### Q11. How to rank papers by their average scores?
 
-**RANK() OVER, Window Functions**
+**Command: RANK() OVER, Window Functions**
 
 Explanation:
 RANK() assigns a rank to each paper based on the average score. Papers with identical scores receive the same rank, and the next rank is skipped accordingly.
@@ -384,7 +384,7 @@ GROUP BY p.paper_id;
 
 ### Q12. How can authors be sequentially ordered? 
 
-**ROW_NUMBER(), Window Functions**
+**Command: ROW_NUMBER(), Window Functions**
 
 Explanation:
 ROW_NUMBER() generates a unique sequential number for each row based on a specified order — useful for pagination or indexing.
@@ -404,7 +404,7 @@ FROM authors;
 
 ### Q13. Which institutions have the highest average paper ratings?  
 
-**CTE (WITH), Aggregates, HAVING**
+**Command: CTE (WITH), Aggregates, HAVING**
 
 Explanation:
 A Common Table Expression (CTE) helps break complex queries into logical steps. First, calculate each paper’s average score inside the CTE. Then, average those scores per institution, showing only those with institutional averages above 8.
@@ -436,7 +436,7 @@ ORDER BY institution_avg_score DESC;
 
 ### Q14. How to handle missing scores and replace NULL with 0?
 
-**COALESCE Command**
+**Command: COALESCE**
 
 Explanation:
 COALESCE() returns the first non-NULL value in its arguments. Replacing NULL scores with 0 avoids issues in calculations and ensures complete reporting.
