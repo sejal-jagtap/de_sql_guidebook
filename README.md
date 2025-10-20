@@ -142,13 +142,9 @@ NOTE:
 
 ## ⚙️ SQL Operations
 
-<<<<<<< HEAD
 ### Q1. How to update institution names and confirm changes?
 
 **1. Update Command**
-=======
-**Update Command**
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 Explanation:
 
@@ -193,11 +189,7 @@ UNION
 SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 ```
 
-<<<<<<< HEAD
 ### Q. How to display each author’s institution and research field?
-=======
-### Q. Which authors are affiliated with which institutions? 
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 **JOIN and ORDER BY Command**
 
@@ -211,11 +203,7 @@ JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY a.full_name;
 ```
 
-<<<<<<< HEAD
 ### Q. How to list all papers with author names and their institutions? 
-=======
-### Q. What are the details of each paper along with its author and institution? 
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 **Multi-table JOIN Command**
 
@@ -231,11 +219,7 @@ JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY p.submission_date;
 ```
 
-<<<<<<< HEAD
 ### Q. How to count total papers published per institution?
-=======
-### Q. How many papers has each institution published? 
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 **LEFT JOIN, COUNT, GROUP BY Command**
 
@@ -252,11 +236,7 @@ GROUP BY i.inst_id
 ORDER BY total_papers DESC;
 ```
 
-<<<<<<< HEAD
 ### Q. How to count how many papers each author has written?
-=======
-### Q. How many papers has each author written?  
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 **HAVING, GROUP BY Command**
 
@@ -273,11 +253,7 @@ HAVING COUNT(p.paper_id) > 0
 ORDER BY num_papers DESC;
 ```
 
-<<<<<<< HEAD
 ### Q. How to calculate average review score per paper? 
-=======
-### Q. What are the average review scores for each paper?  
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 **AVG, COUNT, GROUP BY Command**
 
@@ -308,11 +284,7 @@ WHERE p.paper_status = 'Under Review'
 ORDER BY p.submission_date;
 ```
 
-<<<<<<< HEAD
 ### Q. How to categorize papers by average score?
-=======
-### Q. How can papers be categorized by their average score? 
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 **CASE WHEN, GROUP BY Command**
 
@@ -335,20 +307,13 @@ GROUP BY p.paper_id
 ORDER BY avg_score DESC;
 ```
 
-<<<<<<< HEAD
 ### Q. How to rank papers by their average scores?
 
 **11. RANK() OVER, Window Functions**
 
 Explanation:
 Window functions like RANK() let us assign ranks dynamically based on average review scores.
-
-=======
-### Q. What is the ranking of papers based on review scores? 
-
-**RANK() OVER, Window Functions**
  
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 ```sql
 SELECT 
     p.title,
@@ -403,17 +368,11 @@ HAVING institution_avg_score > 8
 ORDER BY institution_avg_score DESC;
 ```
 
-<<<<<<< HEAD
 ### Q. How to handle missing scores and replace NULL with 0?
 
 **14. COALESCE Command**
 Explanation:
 COALESCE() replaces NULL values with a default value (0 here), ensuring no missing data in average calculations.
-=======
-### Q. How to handle missing review data gracefully? 
-
-**COALESCE Command**
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 ```sql
 SELECT 
@@ -424,11 +383,7 @@ LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 ```
 
-<<<<<<< HEAD
 ### Q. How to extract month and year from submission dates?
-=======
-### Q. How to extract month and year from paper submission dates?  
->>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 **Date functions (`strftime`)**
 
