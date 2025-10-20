@@ -371,6 +371,7 @@ ORDER BY institution_avg_score DESC;
 ### Q. How to handle missing scores and replace NULL with 0?
 
 **14. COALESCE Command**
+
 Explanation:
 COALESCE() replaces NULL values with a default value (0 here), ensuring no missing data in average calculations.
 
