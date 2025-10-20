@@ -1,4 +1,4 @@
-# 📘 SQL Guidebook Project — Research Paper Database
+# 📘 SQL Guidebook — Research Paper Database
 
 ## 🧩 Overview  
 This project demonstrates **SQL fundamentals and advanced data manipulation** using a research publication dataset.  
