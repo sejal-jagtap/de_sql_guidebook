@@ -142,9 +142,13 @@ NOTE:
 
 ## ⚙️ SQL Operations
 
+<<<<<<< HEAD
 ### Q1. How to update institution names and confirm changes?
 
 **1. Update Command**
+=======
+**Update Command**
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 Explanation:
 
@@ -162,7 +166,7 @@ WHERE country = 'United States';
 
 ### Q. Which are the top 5 highest-rated papers? 
 
-**2. LIMIT Command**
+**LIMIT Command**
 
 Explanation:
 We join the papers and reviews tables, calculate each paper’s average score using AVG(), and sort results in descending order. The LIMIT 5 ensures only the top 5 are shown.
@@ -178,7 +182,7 @@ LIMIT 5;
 
 ### Q. How to combine Accepted and Rejected papers into a single list? 
 
-**3. UNION Command**
+**UNION Command**
 
 Explanation:
 The UNION operator merges the results of two queries while removing duplicates. This helps view all papers that are either Accepted or Rejected.
@@ -189,9 +193,13 @@ UNION
 SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 ```
 
+<<<<<<< HEAD
 ### Q. How to display each author’s institution and research field?
+=======
+### Q. Which authors are affiliated with which institutions? 
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
-**4. JOIN and ORDER BY Command**
+**JOIN and ORDER BY Command**
 
 Explanation:
 Using an INNER JOIN, we link authors with institutions via inst_id to show full author profiles alongside their institutions.
@@ -203,9 +211,13 @@ JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY a.full_name;
 ```
 
+<<<<<<< HEAD
 ### Q. How to list all papers with author names and their institutions? 
+=======
+### Q. What are the details of each paper along with its author and institution? 
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
-**5. Multi-table JOIN Command**
+**Multi-table JOIN Command**
 
 Explanation:
 We join three tables — papers, authors, and institutions — to display complete details for each paper, including author and institution information.
@@ -219,9 +231,13 @@ JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY p.submission_date;
 ```
 
+<<<<<<< HEAD
 ### Q. How to count total papers published per institution?
+=======
+### Q. How many papers has each institution published? 
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
-**6. LEFT JOIN, COUNT, GROUP BY Command**
+**LEFT JOIN, COUNT, GROUP BY Command**
 
 Explanation:
 We use LEFT JOIN to include institutions even if they have no papers, and count paper IDs grouped by each institution.
@@ -236,9 +252,13 @@ GROUP BY i.inst_id
 ORDER BY total_papers DESC;
 ```
 
+<<<<<<< HEAD
 ### Q. How to count how many papers each author has written?
+=======
+### Q. How many papers has each author written?  
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
-**7. HAVING, GROUP BY Command**
+**HAVING, GROUP BY Command**
 
 Explanation:
 This query groups papers by authors and counts their contributions. The HAVING clause filters out authors with zero papers.
@@ -253,9 +273,13 @@ HAVING COUNT(p.paper_id) > 0
 ORDER BY num_papers DESC;
 ```
 
+<<<<<<< HEAD
 ### Q. How to calculate average review score per paper? 
+=======
+### Q. What are the average review scores for each paper?  
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
-**8. AVG, COUNT, GROUP BY Command**
+**AVG, COUNT, GROUP BY Command**
 
 Explanation:
 Using the AVG() aggregate function and grouping by paper, we can find each paper’s mean score and total review count.
@@ -270,7 +294,7 @@ ORDER BY avg_score DESC;
 
 ### Q. Which papers are currently under review?  
 
-**9. WHERE, ORDER BY Command**
+**WHERE, ORDER BY Command**
 
 Explanation:
 This query filters the papers table for those marked “Under Review” and joins with author and institution details.
@@ -284,9 +308,13 @@ WHERE p.paper_status = 'Under Review'
 ORDER BY p.submission_date;
 ```
 
+<<<<<<< HEAD
 ### Q. How to categorize papers by average score?
+=======
+### Q. How can papers be categorized by their average score? 
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
-**10. CASE WHEN, GROUP BY Command**
+**CASE WHEN, GROUP BY Command**
 
 Explanation:
 Using CASE WHEN, we classify papers into performance categories based on their average review scores.
@@ -307,6 +335,7 @@ GROUP BY p.paper_id
 ORDER BY avg_score DESC;
 ```
 
+<<<<<<< HEAD
 ### Q. How to rank papers by their average scores?
 
 **11. RANK() OVER, Window Functions**
@@ -314,6 +343,12 @@ ORDER BY avg_score DESC;
 Explanation:
 Window functions like RANK() let us assign ranks dynamically based on average review scores.
 
+=======
+### Q. What is the ranking of papers based on review scores? 
+
+**RANK() OVER, Window Functions**
+ 
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 ```sql
 SELECT 
     p.title,
@@ -326,7 +361,7 @@ GROUP BY p.paper_id;
 
 ### Q. How can authors be sequentially ordered? 
 
-**12. ROW_NUMBER(), Window Functions**
+**ROW_NUMBER(), Window Functions**
 
 Explanation:
 The ROW_NUMBER() function is used to generate a sequential number for each row ordered by author name.
@@ -342,7 +377,7 @@ FROM authors;
 
 ### Q. Which institutions have the highest average paper ratings?  
 
-**13. CTE (WITH), Aggregates, HAVING**
+**CTE (WITH), Aggregates, HAVING**
 
 Explanation:
 We use a CTE (WITH) to calculate each paper’s average score first, then aggregate those averages per institution.
@@ -368,11 +403,17 @@ HAVING institution_avg_score > 8
 ORDER BY institution_avg_score DESC;
 ```
 
+<<<<<<< HEAD
 ### Q. How to handle missing scores and replace NULL with 0?
 
 **14. COALESCE Command**
 Explanation:
 COALESCE() replaces NULL values with a default value (0 here), ensuring no missing data in average calculations.
+=======
+### Q. How to handle missing review data gracefully? 
+
+**COALESCE Command**
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
 ```sql
 SELECT 
@@ -383,9 +424,13 @@ LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 ```
 
+<<<<<<< HEAD
 ### Q. How to extract month and year from submission dates?
+=======
+### Q. How to extract month and year from paper submission dates?  
+>>>>>>> 09288495020aebf31e6c9ba61646af95e0a12352
 
-**15. Date functions (`strftime`)**
+**Date functions (`strftime`)**
 
 Explanation:
 SQLite’s strftime() function allows date formatting — here used to extract submission month and year from date fields.
