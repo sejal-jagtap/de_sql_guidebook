@@ -1,6 +1,5 @@
 # 📘 SQL Guidebook Project — Research Paper Database
 
-
 ## 🧩 Overview  
 This project demonstrates **SQL fundamentals and advanced data manipulation** using a research publication dataset.  
 The database models relationships between institutions, authors, research papers, and reviews.
@@ -143,9 +142,13 @@ NOTE:
 
 ## ⚙️ SQL Operations
 
+### Q1. How to update institution names and confirm changes?
+
 **1. Update Command**
 
-Updates the country name from 'USA' to 'United States' to ensure data consistency. Use SELECT to view if the UPDATE was successful.
+Explanation:
+
+We used the UPDATE command to modify existing data — in this case, renaming all countries labeled “USA” to “United States.” After the update, we verify the change with a SELECT query.
 
 ```sql
 UPDATE institutions
@@ -157,9 +160,12 @@ FROM institutions
 WHERE country = 'United States';
 ```
 
-Q. Which are the top 5 highest-rated papers? 
+### Q. Which are the top 5 highest-rated papers? 
 
 **2. LIMIT Command**
+
+Explanation:
+We join the papers and reviews tables, calculate each paper’s average score using AVG(), and sort results in descending order. The LIMIT 5 ensures only the top 5 are shown.
 
 ```sql
 SELECT p.title, AVG(r.score) AS avg_score
@@ -170,9 +176,12 @@ ORDER BY avg_score DESC
 LIMIT 5;
 ```
 
-Q. How to combine Accepted and Rejected papers into a single list? 
+### Q. How to combine Accepted and Rejected papers into a single list? 
 
 **3. UNION Command**
+
+Explanation:
+The UNION operator merges the results of two queries while removing duplicates. This helps view all papers that are either Accepted or Rejected.
 
 ```sql
 SELECT title, paper_status FROM papers WHERE paper_status = 'Accepted'
@@ -180,9 +189,12 @@ UNION
 SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 ```
 
-Q. Which authors are affiliated with which institutions? 
+### Q. How to display each author’s institution and research field?
 
 **4. JOIN and ORDER BY Command**
+
+Explanation:
+Using an INNER JOIN, we link authors with institutions via inst_id to show full author profiles alongside their institutions.
 
 ```sql
 SELECT a.author_id, a.full_name, a.field_of_research, i.name AS institution
@@ -191,9 +203,12 @@ JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY a.full_name;
 ```
 
-Q. What are the details of each paper along with its author and institution? 
+### Q. How to list all papers with author names and their institutions? 
 
 **5. Multi-table JOIN Command**
+
+Explanation:
+We join three tables — papers, authors, and institutions — to display complete details for each paper, including author and institution information.
 
 ```sql 
 SELECT p.paper_id, p.title, p.paper_status, p.submission_date,
@@ -204,9 +219,12 @@ JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY p.submission_date;
 ```
 
-Q. How many papers has each institution published? 
+### Q. How to count total papers published per institution?
 
 **6. LEFT JOIN, COUNT, GROUP BY Command**
+
+Explanation:
+We use LEFT JOIN to include institutions even if they have no papers, and count paper IDs grouped by each institution.
 
 ```sql
 SELECT i.name AS institution,
@@ -218,9 +236,12 @@ GROUP BY i.inst_id
 ORDER BY total_papers DESC;
 ```
 
-Q. How many papers has each author written?  
+### Q. How to count how many papers each author has written?
 
 **7. HAVING, GROUP BY Command**
+
+Explanation:
+This query groups papers by authors and counts their contributions. The HAVING clause filters out authors with zero papers.
 
 ```sql
 SELECT a.full_name AS author,
@@ -232,9 +253,12 @@ HAVING COUNT(p.paper_id) > 0
 ORDER BY num_papers DESC;
 ```
 
-Q. What are the average review scores for each paper?  
+### Q. How to calculate average review score per paper? 
 
 **8. AVG, COUNT, GROUP BY Command**
+
+Explanation:
+Using the AVG() aggregate function and grouping by paper, we can find each paper’s mean score and total review count.
 
 ```sql
 SELECT p.title, AVG(r.score) AS avg_score, COUNT(r.review_id) AS num_reviews
@@ -244,9 +268,12 @@ GROUP BY p.paper_id
 ORDER BY avg_score DESC;
 ```
 
-Q. Which papers are currently under review?  
+### Q. Which papers are currently under review?  
 
 **9. WHERE, ORDER BY Command**
+
+Explanation:
+This query filters the papers table for those marked “Under Review” and joins with author and institution details.
 
 ```sql
 SELECT p.title, a.full_name AS author,p.paper_status, i.name AS institution
@@ -257,9 +284,12 @@ WHERE p.paper_status = 'Under Review'
 ORDER BY p.submission_date;
 ```
 
-Q. How can papers be categorized by their average score? 
+### Q. How to categorize papers by average score?
 
 **10. CASE WHEN, GROUP BY Command**
+
+Explanation:
+Using CASE WHEN, we classify papers into performance categories based on their average review scores.
 
 ```sql
 SELECT 
@@ -277,10 +307,13 @@ GROUP BY p.paper_id
 ORDER BY avg_score DESC;
 ```
 
-What is the ranking of papers based on review scores? 
+### Q. How to rank papers by their average scores?
 
 **11. RANK() OVER, Window Functions**
- 
+
+Explanation:
+Window functions like RANK() let us assign ranks dynamically based on average review scores.
+
 ```sql
 SELECT 
     p.title,
@@ -291,9 +324,12 @@ LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 ```
 
-Q. How can authors be sequentially ordered? 
+### Q. How can authors be sequentially ordered? 
 
 **12. ROW_NUMBER(), Window Functions**
+
+Explanation:
+The ROW_NUMBER() function is used to generate a sequential number for each row ordered by author name.
 
 ```sql
 SELECT 
@@ -304,9 +340,12 @@ SELECT
 FROM authors;
 ```
 
-Q. Which institutions have the highest average paper ratings?  
+### Q. Which institutions have the highest average paper ratings?  
 
 **13. CTE (WITH), Aggregates, HAVING**
+
+Explanation:
+We use a CTE (WITH) to calculate each paper’s average score first, then aggregate those averages per institution.
 
 ```sql
 WITH paper_scores AS (
@@ -329,9 +368,11 @@ HAVING institution_avg_score > 8
 ORDER BY institution_avg_score DESC;
 ```
 
-Q. How to handle missing review data gracefully? 
+### Q. How to handle missing scores and replace NULL with 0?
 
 **14. COALESCE Command**
+Explanation:
+COALESCE() replaces NULL values with a default value (0 here), ensuring no missing data in average calculations.
 
 ```sql
 SELECT 
@@ -342,9 +383,12 @@ LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 ```
 
-Q. How to extract month and year from paper submission dates?  
+### Q. How to extract month and year from submission dates?
 
 **15. Date functions (`strftime`)**
+
+Explanation:
+SQLite’s strftime() function allows date formatting — here used to extract submission month and year from date fields.
 
 ```sql
 SELECT 

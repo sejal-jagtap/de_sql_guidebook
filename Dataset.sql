@@ -5,16 +5,7 @@ CREATE TABLE IF NOT EXISTS institutions (
     country   VARCHAR(100) NOT NULL
 );
 
-/*
-INTEGER PRIMARY KEY AUTOINCREMENT → auto-generated unique ID
-
-NOT NULL → value must be provided
-
-IF NOT EXISTS → avoids error if table already exists
- */
-
--- Now each institution has a fixed inst_id, so any foreign key reference in authors or other tables will never be NULL.
-
+-- Insert data into Institutions table
 INSERT INTO institutions (inst_id, name, country) VALUES
 (1, 'Massachusetts Institute of Technology', 'USA'),
 (2, 'Stanford University', 'USA'),
@@ -26,7 +17,6 @@ INSERT INTO institutions (inst_id, name, country) VALUES
 (8, 'ETH Zurich', 'Switzerland'),
 (9, 'National University of Singapore', 'Singapore'),
 (10, 'Tsinghua University', 'China');
-
 
 -- 2.Authors Table
 CREATE TABLE IF NOT EXISTS authors (
@@ -48,7 +38,6 @@ INSERT INTO authors (full_name, field_of_research, inst_id) VALUES
 
 
 -- 3.Papers Table
-
 CREATE TABLE IF NOT EXISTS papers (
     paper_id        INTEGER PRIMARY KEY AUTOINCREMENT,
     title           VARCHAR(200) NOT NULL,
@@ -58,6 +47,7 @@ CREATE TABLE IF NOT EXISTS papers (
     FOREIGN KEY (author_id) REFERENCES authors(author_id)
 );
 
+-- Insert data into Papers table
 INSERT INTO papers (title, submission_date, paper_status, author_id) VALUES
 ('Quantum-Inspired Neural Networks', '2024-01-15', 'Accepted', 1),
 ('Self-Supervised Learning for Images', '2024-02-01', 'Under Review', 2),
@@ -66,9 +56,6 @@ INSERT INTO papers (title, submission_date, paper_status, author_id) VALUES
 ('Prompt Engineering for LLMs', '2024-03-12', 'Under Review', 3),
 ('Ethical AI for Social Media', '2024-03-20', 'Under Review', 5),
 ('Vision Transformers in Action', '2024-03-25', 'Accepted', 6);
-
-
-
 
 -- 4.Reviews Table
 CREATE TABLE IF NOT EXISTS reviews (
@@ -80,6 +67,7 @@ CREATE TABLE IF NOT EXISTS reviews (
     FOREIGN KEY (paper_id) REFERENCES papers(paper_id)
 );
 
+-- Insert data into Reviews Table
 INSERT INTO reviews (paper_id, reviewer_name, score, comments) VALUES
 (1, 'Dr. Smith', 9, 'Innovative work with strong theoretical foundations.'),
 (1, 'Dr. Brown', 8, 'Solid contribution and clear presentation.'),

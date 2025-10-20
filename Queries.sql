@@ -1,14 +1,14 @@
---------------------------------------- CRUD Operations ----------------------------
+-- Update 'United States' as 'USA'
 UPDATE institutions
 SET country = 'United States'
 WHERE country = 'USA';
 
+-- View rows to confirm update
 Select * 
 from institutions
 where country = 'United States';
 
-
--- Add LIMIT example (top 5 papers by average score)
+-- Top 5 papers by average score
 SELECT p.title, AVG(r.score) AS avg_score
 FROM papers p
 LEFT JOIN reviews r ON p.paper_id = r.paper_id
@@ -16,27 +16,18 @@ GROUP BY p.paper_id
 ORDER BY avg_score DESC
 LIMIT 5;
 
--- Add UNION example (papers that are Accepted or Rejected)
+-- List all papers with current status as Accepted/Rejected
 SELECT title, paper_status FROM papers WHERE paper_status = 'Accepted'
 UNION
 SELECT title, paper_status FROM papers WHERE paper_status = 'Rejected';
 
-/*
- * List all authors with their institution
- */
-
+-- List all authors with their institution
 SELECT a.author_id, a.full_name, a.field_of_research, i.name AS institution
 FROM authors a
 JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY a.full_name;
 
-
-/*
- * List all papers with author name and institution
- * 
- * Combines 3 tables
-   Can be used to see full hierarchy: paper → author → institution
- */
+-- List all papers with author name and institution
 SELECT p.paper_id, p.title, p.paper_status, p.submission_date,
        a.full_name AS author, i.name AS institution
 FROM papers p
@@ -44,15 +35,7 @@ JOIN authors a ON p.author_id = a.author_id
 JOIN institutions i ON a.inst_id = i.inst_id
 ORDER BY p.submission_date;
 
-/*
- * 
- * Count papers per institution
-LEFT JOIN: shows institutions even if they have no papers
-COUNT: total papers
-GROUP BY: aggregates by institution
-ORDER BY: largest number of papers first
- */
-
+-- Count papers per institution
 SELECT i.name AS institution,
        COUNT(p.paper_id) AS total_papers
 FROM institutions i
@@ -61,12 +44,7 @@ LEFT JOIN papers p ON a.author_id = p.author_id
 GROUP BY i.inst_id
 ORDER BY total_papers DESC;
 
-/*
- * Count papers per author
- * 
- * HAVING: filters after aggregation (authors with at least 1 paper)
- */
-
+-- Count papers per author
 SELECT a.full_name AS author,
        COUNT(p.paper_id) AS num_papers
 FROM authors a
@@ -75,22 +53,14 @@ GROUP BY a.author_id
 HAVING COUNT(p.paper_id) > 0
 ORDER BY num_papers DESC;
 
-/*
- * Average review score per paper
- * 
- * AVG: average review score
-
-COUNT: number of reviews
-
-Shows which papers are highly rated
- */
+-- Average review score per paper
 SELECT p.title, AVG(r.score) AS avg_score, COUNT(r.review_id) AS num_reviews
 FROM papers p
 LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id
 ORDER BY avg_score DESC;
 
-/*Papers under review */
+-- Papers under review 
 SELECT p.title, a.full_name AS author,p.paper_status, i.name AS institution
 FROM papers p
 JOIN authors a ON p.author_id = a.author_id
@@ -98,7 +68,7 @@ JOIN institutions i ON a.inst_id = i.inst_id
 WHERE p.paper_status = 'Under Review'
 ORDER BY p.submission_date;
 
-/* Categorize papers by average review score */
+-- Categorize papers by average review score 
 SELECT 
     p.title,
     AVG(r.score) AS avg_score,
@@ -113,11 +83,7 @@ LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id
 ORDER BY avg_score DESC;
 
-
-/* Rank papers by their average review score (RANK() Window Function) 
- * Purpose:
-Uses RANK() to assign ranking positions based on review performance.
-Window functions are calculated without collapsing data like GROUP BY. */
+-- Rank papers by their average review score 
 SELECT 
     p.title,
     AVG(r.score) AS avg_score,
@@ -126,8 +92,7 @@ FROM papers p
 LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 
-
-/* Assign row numbers to authors */
+-- Assign row numbers to authors 
 SELECT 
     ROW_NUMBER() OVER (ORDER BY full_name) AS row_num,
     full_name,
@@ -135,8 +100,7 @@ SELECT
     inst_id
 FROM authors;
 
-
-/* Common Table Expression (CTE) — Find institutions with average paper score above 8   */
+-- Find institutions with average paper score above 8 
 WITH paper_scores AS (
     SELECT 
         p.paper_id,
@@ -156,8 +120,7 @@ GROUP BY i.inst_id
 HAVING institution_avg_score > 8
 ORDER BY institution_avg_score DESC;
 
-/* Null handling 
- * If a paper has no reviews, its average score shows as 0 instead of NULL.*/
+-- If a paper has no reviews, its average score shows as 0 instead of NULL.
 SELECT 
     p.title,
     COALESCE(AVG(r.score), 0) AS avg_score
@@ -165,7 +128,7 @@ FROM papers p
 LEFT JOIN reviews r ON p.paper_id = r.paper_id
 GROUP BY p.paper_id;
 
-/* Date function example */
+-- Date function example 
 SELECT 
     title,
     submission_date,
